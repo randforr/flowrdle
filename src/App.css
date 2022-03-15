@@ -1,0 +1,22 @@
+.App {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+button {
+  width: 100px;
+  height: 50px;
+  background-color: aliceblue;
+  color: green;
+  border: none
+}
+
+input {
+  width: 100px;
+  height: 30px;
+  background-color: lightgoldenrodyellow;
+}
