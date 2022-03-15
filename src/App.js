@@ -5,7 +5,7 @@ import parse from 'html-react-parser'
 
 import {useState, useEffect} from 'react';
 
-import { guessTx, viewSvgStrng, resetTx} from "./transactions/code.js"
+import { guessTx, viewSvgStringScript, resetTx, viewSvgKeyboardScript} from "./transactions/code.js"
 
 fcl.config()
   .put("env", "testnet")
@@ -17,7 +17,8 @@ fcl.config()
 function App() {
   const [user, setUser] = useState();
   const [scriptResult, setScriptResult] = useState([]);
-  const [text, setText] = useState("");
+  const [keyboardScriptResult, setKbScriptResult] = useState([]);
+  const [text, setText] = useState(""); 
 
   useEffect(() => {
     fcl.currentUser().subscribe(setUser);
@@ -50,16 +51,33 @@ function App() {
     console.log(transaction)
 
     viewSvgString()
+    viewSvgKeyboard()
+  }
+
+  const wrapperFunction = () => {
+    viewSvgString()
+    viewSvgKeyboard()
   }
 
   const viewSvgString = async () => {
     const result = await fcl.send([
-      fcl.script(viewSvgStrng),
+      fcl.script(viewSvgStringScript),
       fcl.args([
         fcl.arg(user.addr, types.Address)
       ])
     ]).then(fcl.decode);
     setScriptResult(result);
+    console.log(result);
+  }
+
+  const viewSvgKeyboard = async () => {
+    const result = await fcl.send([
+      fcl.script(viewSvgKeyboardScript),
+      fcl.args([
+        fcl.arg(user.addr, types.Address)
+      ])
+    ]).then(fcl.decode);
+    setKbScriptResult(result);
     console.log(result);
   }
 
@@ -85,7 +103,7 @@ function App() {
         <button onClick={() => logIn()}>Log In</button>
         <button onClick={() => logOut()}>Log Out</button>
         
-        <button onClick={() => viewSvgString()}>View Board</button>
+        <button onClick={() => wrapperFunction()}>View Board</button>
         <button onClick={() => reset()}>Start Over</button>
       </div>
 
@@ -94,8 +112,9 @@ function App() {
         <button onClick={() => guess()}>Guess</button>
       </div>
 
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 0 100 88">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
         {scriptResult.length !== 0 ? parse(scriptResult) : null}
+        {keyboardScriptResult.length !== 0 ? parse(keyboardScriptResult) : null}
       </svg>
 
     </div>
