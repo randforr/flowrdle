@@ -9,7 +9,7 @@ import { guessTx, viewSvgStringScript, resetTx, viewSvgKeyboardScript} from "./t
 
 fcl.config()
   .put("accessNode.api", "https://access-testnet.onflow.org")
-  .put("discovery.wallet", "http://fcl-discovery.onflow.org/testnet/authn")
+  .put("discovery.wallet", "https://fcl-discovery.onflow.org/testnet/authn")
 
 // 0xcaf735a7582f9b4c
 
