@@ -8,7 +8,6 @@ import {useState, useEffect} from 'react';
 import { guessTx, viewSvgStringScript, resetTx, viewSvgKeyboardScript} from "./transactions/code.js"
 
 fcl.config()
-  .put("env", "testnet")
   .put("accessNode.api", "https://access-testnet.onflow.org")
   .put("discovery.wallet", "http://fcl-discovery.onflow.org/testnet/authn")
 
